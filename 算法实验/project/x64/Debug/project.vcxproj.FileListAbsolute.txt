@@ -1,0 +1,2 @@
+D:\workspace-2020\studio\project\x64\Debug\project.exe
+D:\workspace-2020\studio\project\x64\Debug\project.pdb
