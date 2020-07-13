@@ -1,0 +1,72 @@
+（一）基本表操作
+1.建立基本表
+创建教材中的学生表（student）、学生选课表（SC）、课程表（course）
+1）·学生表：Student (Sno, Sname,Sage，Ssex,Sdept）其中学号Sno主码
+create table student
+(	
+Sno number(8) constraint pk_student primary key,
+Sname char(20),
+ Ssex char(2), 
+ Sage number(3), 
+ Sdept char(10));
+
+);
+2）·课程表：Course (Cno, Cname, Cpno, Ccredit)其中课程号Cno主码；先行课为外码参照Course表中Cno字段。
+create table Course
+(Cno number(4),
+Cname char(20),
+Cpno number(4),
+Ccredit number(4)，
+	constraint fk_c foreign key (Cno) references Course(Cno),
+	constraint pk_C primary key (Cno)
+)
+3)·学生选课表：SC(Sno, Cno, Grade)其中学号Sno、课程号Cno为主码；Sno为外码参照Student表中sno字段；Cno为外码参照Course表中cno字段。
+create table SC
+(Sno number(12),
+Cno number(4),
+Grade number(3),
+	constraint pk_SC primary key (Sno,Cno),
+	constraint fk_c foreign key(Cno) references Course(Cno);
+)
+2.修改基本表
+1）在Student表中加入属性BloodType（char（2）型）。
+alter table Student add BloodType char(2);
+2）修改表student中的Sdept属性的数据类型为varchar2(40)，注意和定义表的时候类型不同。
+alter table Student modify Sdept varchar2(40);
+3）给表student的sage列添加一个自定义约束sage必须大于15且小于30。
+alter table Student add constraint fk_s check(Ssage > 15 and Ssage < 30);
+4）删除3）中新添加的约束。
+alter table Student drop constraint fk_s;
+5）删除表student中的字段BloodType。
+alter table Student DROP COLUMN BloodType;
+3.删除基本表
+1) 删除基本表Student
+DROP TABLE Student;
+2）删除基本表SC
+DROP TABLE SC;
+（二）索引操作
+1.建立索引
+1）在Student表上建立关于Sname的唯一索引stusnam+学号后四位
+CREATE UNIQUE INDEX stusnam3553 ON Student (Sname); 
+2）在SC表上建立关于Sno升序、Cno降序的唯一索引i_sc+学号后四位
+Create unique index i_sc3553 on SC (Sno ASC,Cno DESC);
+2.删除索引
+1）删除Student表上的索引stusnam+学号后四位
+drop index stusnam3553;
+2）删除Course表上的索引i_sc+学号后四位
+drop index  i_sc3553;
+（三）数据更新
+1.插入数据
+1）向Student表中插入数据
+INSERT 
+INTO Student 
+VALUES (20070009, '王红', '女', 20,'MA'); 
+2）向Course表中插入数据
+INSERT 
+INTO Course 
+VALUES (10, '网络技术', 5, 2); 
+3）向SC表中插入数据
+INSERT 
+INTO SC(Sno, Cno,Grade) 
+VALUES (1001, 10,78); 
+
